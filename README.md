@@ -1,6 +1,6 @@
 # SENTINEL — AI Command Center for Stadium Operations
 
-**▶ Live:** _<add your Vercel URL here after the first deploy>_ (deployed on Vercel)
+**▶ Live:** **https://sentinel-alpha-wine.vercel.app** (deployed on Vercel)
 
 > _Built as part of a team; adapted from our NEXUS project._
 
