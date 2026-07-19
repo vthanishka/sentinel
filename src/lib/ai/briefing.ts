@@ -126,8 +126,12 @@ export interface Recommendation {
   reasoning: string;
 }
 
+// Upper bound sized for a control-room card, with headroom: newer flash models
+// are wordier than the prompt asks, and clipping a valid explanation to rule
+// mode over a few characters would waste a good AI answer. The prompt still asks
+// for brevity; this only stops an occasional long-but-fine reply being rejected.
 const reasoningSchema = z.object({
-  reasoning: z.string().min(20).max(600),
+  reasoning: z.string().min(20).max(900),
 });
 
 /**

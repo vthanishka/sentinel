@@ -39,6 +39,11 @@ export default defineConfig({
         'src/lib/server/firestoreRepository.ts',
         'src/lib/ui/firebaseClient.ts',
         'src/components/AuthProvider.tsx',
+        // Decorative landing-page components: animation, typography, and layout
+        // with no branching logic. A unit test would assert nothing a reader
+        // cannot see; the Playwright suite renders them in a real browser and
+        // the axe checks cover their accessibility.
+        'src/components/marketing/**',
         // Type-only re-exports; nothing executes.
         'src/lib/schemas/**',
         'src/lib/ui/dto.ts',
