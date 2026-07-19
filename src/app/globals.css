@@ -1,0 +1,373 @@
+@import 'tailwindcss';
+
+/**
+ * SENTINEL design tokens — deep slate-blue command aesthetic.
+ *
+ * Every foreground/background pairing below is checked to WCAG AA (4.5:1 for
+ * body text, 3:1 for large text and UI boundaries). Status colours are only
+ * ever half the signal: components must pair them with a text label or icon.
+ */
+@theme {
+  /* Surfaces — deep slate-blue, cool-shifted so the cyan accent reads as light. */
+  --color-void: #0a1120;
+  --color-surface: #101a30;
+  --color-surface-raised: #18243f;
+  --color-surface-overlay: #21314f;
+  --color-border: #2c3f63;
+  --color-border-strong: #3d5480;
+
+  /* Text — measured against --color-surface. */
+  --color-ink: #eef3fb; /* 15.7:1 */
+  --color-ink-muted: #aebdd4; /* 8.0:1 */
+  --color-ink-dim: #8695b0; /* 4.7:1 */
+
+  /* Accent — cyan. */
+  --color-accent: #22d3ee;
+  --color-accent-strong: #67e8f9;
+  --color-accent-dim: #0c3b45;
+
+  /* Semantic status ramp. Each -text token clears 4.5:1 on its surface. */
+  --color-status-normal: #2ecc8f;
+  --color-status-normal-text: #6ee7b7;
+  --color-status-normal-bg: #0d2b22;
+  --color-status-elevated: #f0b429;
+  --color-status-elevated-text: #fcd34d;
+  --color-status-elevated-bg: #2e2410;
+  --color-status-high: #ff8c42;
+  --color-status-high-text: #fdba74;
+  --color-status-high-bg: #331c0e;
+  --color-status-critical: #ff4d5e;
+  --color-status-critical-text: #fda4af;
+  --color-status-critical-bg: #34101a;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', monospace;
+
+  --radius-panel: 0.75rem;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-void);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* A visible, high-contrast focus ring everywhere — never removed. */
+  :focus-visible {
+    outline: 2px solid var(--color-accent-strong);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Tabular numerals stop live metrics from jittering as digits change. */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer utilities {
+  .panel {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-panel);
+  }
+
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+    padding: 0.75rem 1.25rem;
+    background-color: var(--color-accent);
+    color: var(--color-void);
+    font-weight: 600;
+    border-radius: 0 0 0.5rem 0;
+  }
+
+  .skip-link:focus {
+    left: 0;
+  }
+
+  /*
+   * The control room reacting: a subtle, slow pulse on a critical status pill.
+   * Deliberately restrained — a fast or bright flash in a room staffed for
+   * hours is fatigue, not information. One breath every 2.4s draws the eye
+   * without demanding it, and it rides on box-shadow so it never shifts layout.
+   */
+  .pulse-critical {
+    animation: sentinel-pulse-critical 2.4s ease-in-out infinite;
+  }
+
+  @keyframes sentinel-pulse-critical {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(255, 77, 94, 0);
+    }
+    50% {
+      box-shadow: 0 0 0 4px rgba(255, 77, 94, 0.22);
+    }
+  }
+
+  /*
+   * A one-shot lift when a panel escalates, so a change of state reads as an
+   * event rather than a silent value swap. Fires once and settles.
+   */
+  .flash-escalate {
+    animation: sentinel-flash-escalate 0.9s ease-out 1;
+  }
+
+  @keyframes sentinel-flash-escalate {
+    0% {
+      border-color: var(--color-status-critical);
+      box-shadow: 0 0 0 1px var(--color-status-critical);
+    }
+    100% {
+      border-color: var(--color-border);
+      box-shadow: none;
+    }
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+ * Landing-page motion system.
+ *
+ * All of it is decorative and every rule below is neutralised by the
+ * prefers-reduced-motion block at the bottom of this file (it matches `*`), so
+ * the marketing page degrades to a clean, static document for anyone who asks
+ * the OS for less motion. Animations ride on transform / opacity / box-shadow
+ * only, so they never trigger layout.
+ * ────────────────────────────────────────────────────────────────────────── */
+@layer utilities {
+  /* Scroll reveal — progressive enhancement. Content is fully visible by
+     default (so no-JS, crawlers, and reduced-motion users always see it); the
+     Reveal client component adds `.reveal-armed` on mount only when it can
+     actually animate, hiding the element, then adds `.is-in` to settle it in as
+     it scrolls into view. If JS never runs, the element simply stays visible. */
+  .reveal-armed {
+    opacity: 0;
+    transform: translateY(1.25rem);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+  .reveal-armed.is-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* An animated aurora wash — two slow-drifting radial glows behind the hero. */
+  .aurora {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .aurora::before,
+  .aurora::after {
+    content: '';
+    position: absolute;
+    width: 45rem;
+    height: 45rem;
+    border-radius: 9999px;
+    filter: blur(90px);
+    opacity: 0.5;
+    will-change: transform;
+  }
+  .aurora::before {
+    background: radial-gradient(circle at center, var(--color-accent), transparent 60%);
+    top: -18rem;
+    left: -12rem;
+    animation: sentinel-drift-a 22s ease-in-out infinite;
+  }
+  .aurora::after {
+    background: radial-gradient(circle at center, var(--color-status-normal), transparent 60%);
+    top: -10rem;
+    right: -14rem;
+    opacity: 0.35;
+    animation: sentinel-drift-b 26s ease-in-out infinite;
+  }
+  @keyframes sentinel-drift-a {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(6rem, 4rem) scale(1.15);
+    }
+  }
+  @keyframes sentinel-drift-b {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1.1);
+    }
+    50% {
+      transform: translate(-5rem, 3rem) scale(0.95);
+    }
+  }
+
+  /* A faint control-room grid that drifts upward, forever. Masked to fade out. */
+  .grid-drift {
+    position: absolute;
+    inset: -1px;
+    pointer-events: none;
+    background-image:
+      linear-gradient(var(--color-border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+    background-size: 44px 44px;
+    opacity: 0.25;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+    animation: sentinel-grid-drift 6s linear infinite;
+  }
+  @keyframes sentinel-grid-drift {
+    from {
+      background-position:
+        0 0,
+        0 0;
+    }
+    to {
+      background-position:
+        0 -44px,
+        0 0;
+    }
+  }
+
+  /* An animated accent gradient for display headings. */
+  .text-gradient {
+    background-image: linear-gradient(
+      100deg,
+      var(--color-ink) 20%,
+      var(--color-accent-strong) 50%,
+      var(--color-ink) 80%
+    );
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: sentinel-sheen 6s linear infinite;
+  }
+  @keyframes sentinel-sheen {
+    to {
+      background-position: 200% center;
+    }
+  }
+
+  /* Loading shimmer for skeleton blocks. */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      var(--color-surface-raised) 25%,
+      var(--color-surface-overlay) 37%,
+      var(--color-surface-raised) 63%
+    );
+    background-size: 400% 100%;
+    animation: sentinel-shimmer 1.4s ease infinite;
+  }
+  @keyframes sentinel-shimmer {
+    from {
+      background-position: 100% 0;
+    }
+    to {
+      background-position: -100% 0;
+    }
+  }
+
+  /* Gentle float — for the hero status chip. */
+  .float {
+    animation: sentinel-float 5s ease-in-out infinite;
+  }
+  @keyframes sentinel-float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-0.5rem);
+    }
+  }
+
+  /* A slow breathing glow for the primary CTA. */
+  .glow {
+    animation: sentinel-glow 3s ease-in-out infinite;
+  }
+  @keyframes sentinel-glow {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(34, 211, 238, 0);
+    }
+    50% {
+      box-shadow: 0 0 2.5rem 0 rgba(34, 211, 238, 0.45);
+    }
+  }
+
+  /* Marquee for the language ticker. Duplicated content + -50% keeps it seamless. */
+  .marquee {
+    display: flex;
+    width: max-content;
+    animation: sentinel-marquee 32s linear infinite;
+  }
+  .marquee-mask {
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  @keyframes sentinel-marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* A blinking terminal caret for the typewriter. */
+  .caret::after {
+    content: '';
+    display: inline-block;
+    width: 0.6ch;
+    height: 1.1em;
+    margin-left: 0.1em;
+    translate: 0 0.12em;
+    background: var(--color-accent);
+    animation: sentinel-blink 1.05s steps(1) infinite;
+  }
+  @keyframes sentinel-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  /* Card hover lift — a utility so section cards share one motion. */
+  .lift {
+    transition:
+      transform 0.25s ease,
+      border-color 0.25s ease,
+      box-shadow 0.25s ease,
+      background-color 0.25s ease;
+  }
+  .lift:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-border-strong);
+    box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* Honour the OS reduced-motion setting: no transitions, no pulses, no count-ups. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
