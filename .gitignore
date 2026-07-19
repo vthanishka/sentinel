@@ -32,3 +32,6 @@ screenshots/
 .env.local.*
 .env.*.bak
 *.audit-bak
+
+.vercel
+.env*
