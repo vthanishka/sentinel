@@ -12,6 +12,14 @@ instant, triaged response.**
 The whole app runs from a single demo entry — **no sign-in, no cloud project** — so
 you can open it and go straight to the console.
 
+## Screens
+
+![SENTINEL — command-center hero](docs/images/hero.png)
+
+|                Command center (live AI briefing)                |              Multilingual incident triage              |
+| :-------------------------------------------------------------: | :----------------------------------------------------: |
+| ![SENTINEL command-center dashboard](docs/images/dashboard.png) | ![SENTINEL incident triage](docs/images/incidents.png) |
+
 ---
 
 ## The 20-second demo

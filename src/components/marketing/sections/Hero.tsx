@@ -35,7 +35,7 @@ export function Hero() {
           <span aria-hidden="true" className="text-[var(--color-status-normal)]">
             ●
           </span>
-          FIFA World Cup 2026 · Stadium Operations
+          Real-Time Crowd Safety · FIFA World Cup 2026
         </p>
 
         <h1 className="mt-8 text-6xl font-bold leading-[0.9] tracking-tight sm:text-7xl md:text-[7rem]">
@@ -57,9 +57,9 @@ export function Hero() {
         </p>
 
         <p className="mt-7 max-w-2xl text-lg leading-relaxed text-[var(--color-ink-muted)]">
-          It watches every operational feed, spots crowd risk before it happens, and tells you what
-          to do — and why. Safety numbers are computed by a deterministic engine; generative AI
-          reasons on top of the facts and never invents them.
+          From ingress to final whistle, SENTINEL reads every feed, flags the risk that actually
+          matters, and hands the duty manager a decision with the reasoning attached. The safety
+          math is deterministic — the AI explains it, it never makes it up.
         </p>
 
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">

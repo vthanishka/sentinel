@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Space_Grotesk } from 'next/font/google';
+import { Inter, JetBrains_Mono } from 'next/font/google';
 import { headers } from 'next/headers';
 
 import './globals.css';
@@ -11,12 +11,12 @@ const inter = Inter({
   preload: true,
 });
 
-// Space Grotesk carries the display type — headings, the wordmark, and stat
-// numerals. Its slightly technical, geometric character reads as "control room"
-// while staying legible at the small sizes the dashboard packs numbers into.
-const spaceGrotesk = Space_Grotesk({
+// JetBrains Mono carries the display type — headings, the wordmark, and the
+// tabular metrics. A monospaced display face gives the console a technical,
+// terminal-room identity and keeps numerals perfectly aligned as they tick.
+const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
-  variable: '--font-space-grotesk',
+  variable: '--font-jetbrains',
   display: 'swap',
   preload: true,
 });
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#0a0a18',
+  themeColor: '#0c0a12',
   width: 'device-width',
   initialScale: 1,
 };
@@ -54,7 +54,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   await headers();
 
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
       <body className="min-h-dvh antialiased">{children}</body>
     </html>
   );

@@ -21,7 +21,7 @@ function NavLinks({ active }: { active: string }) {
           <a
             href={`#${section.id}`}
             aria-current={active === section.id ? 'true' : undefined}
-            className={`rounded-md px-3 py-1.5 text-sm transition-colors ${
+            className={`link-underline rounded-md px-3 py-1.5 text-sm transition-colors ${
               active === section.id
                 ? 'text-[var(--color-accent-strong)]'
                 : 'text-[var(--color-ink-dim)] hover:text-[var(--color-ink)]'
@@ -88,7 +88,7 @@ export function LandingNav() {
     >
       <div
         aria-hidden="true"
-        className="h-0.5 origin-left bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-status-normal)]"
+        className="h-0.5 origin-left bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-accent-cyan)]"
         style={{ transform: `scaleX(${progress / 100})` }}
       />
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-6">
