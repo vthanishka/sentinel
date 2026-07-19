@@ -75,8 +75,8 @@ export function Hero() {
 
           <dl className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm">
             <HeroStat value="30+" label="languages triaged" />
-            <HeroStat value="< 2s" label="AI briefing latency" />
-            <HeroStat value="483" label="tests green" />
+            <HeroStat value="~2s" label="AI briefing latency" />
+            <HeroStat value="480" label="tests green" />
           </dl>
         </div>
 

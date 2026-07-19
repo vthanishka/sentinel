@@ -17,7 +17,7 @@ export function StatsSection() {
     <section className="border-y border-[var(--color-border)] bg-[var(--color-surface)]/40 py-16">
       <div className="mx-auto grid max-w-6xl grid-cols-2 gap-8 px-6 text-center lg:grid-cols-4">
         <StatItem value={30} suffix="+" label="languages understood" />
-        <StatItem value={483} label="automated tests, all green" />
+        <StatItem value={480} label="automated tests, all green" />
         <StatItem value={95} suffix="%+" label="safety-engine coverage" />
         <StatItem value={100} suffix="%" label="deterministic safety math" />
       </div>
