@@ -14,7 +14,7 @@ import { describeError, logger } from '../server/logger';
 /**
  * Generation config for every call.
  *
- * `thinkingBudget: 0` disables gemini-2.5-flash's extended reasoning. Our tasks
+ * `thinkingBudget: 0` disables the flash model's extended reasoning. Our tasks
  * are rephrasing computed facts into prose and translating/classifying an
  * incident — not multi-step reasoning — so thinking adds several seconds of
  * latency for no quality gain. Disabling it cut a real briefing from ~7.9s to
@@ -53,7 +53,7 @@ function getModel(): GenerativeModel | null {
   cachedClient ??= new GoogleGenerativeAI(GEMINI_API_KEY);
   return cachedClient.getGenerativeModel(
     { model: GEMINI_MODEL, generationConfig: GENERATION_CONFIG },
-    // v1beta is the endpoint that honours thinkingConfig for gemini-2.5-flash.
+    // v1beta is the endpoint that honours thinkingConfig for the flash model.
     { apiVersion: 'v1beta' },
   );
 }

@@ -25,8 +25,8 @@ Treat degradation as a designed path, not an exception.
   into a second-class path.
 - The whole demo arc works with the AI switched off — verified in an end-to-end
   "AI endpoints fail" spec.
-- The timeout was raised 4s → 8s once real latency was measured (Gemini 2.5-flash
-  with extended thinking disabled runs ~2s; 8s is headroom over network variance,
+- The timeout was raised 4s → 8s once real latency was measured (the Gemini flash
+  model with extended thinking disabled runs ~2s; 8s is headroom over network variance,
   and the deterministic panels are instant regardless).
 - Cost: two code paths per feature. Mitigated by making the fallback the _default_
   mental model — the AI is an enhancement layered on a working rule-based product.

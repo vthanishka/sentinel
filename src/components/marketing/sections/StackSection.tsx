@@ -6,7 +6,7 @@ const STACK = [
   'Next.js 15',
   'React 19',
   'TypeScript · strict',
-  'Google Gemini API · 2.5 Flash',
+  'Google Gemini API · 3.5 Flash',
   'Zod-validated boundaries',
   'Deterministic engine',
   'Firestore',

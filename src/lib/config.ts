@@ -4,8 +4,13 @@
 // bundle becomes a build/runtime error rather than a silent security hole.
 import { z } from 'zod';
 
-/** Gemini model id. `gemini-1.5-flash` is retired and 404s; 2.5-flash is current. */
-export const GEMINI_MODEL = 'gemini-2.5-flash';
+/**
+ * Gemini model id. Older flash ids (1.5-flash, and 2.5-flash for new API keys)
+ * are gated and 404 with "no longer available"; gemini-3.5-flash is the current
+ * fast model this key can call. A fast flash model is the right fit: the AI only
+ * rephrases computed facts and translates incident text, not multi-step reasoning.
+ */
+export const GEMINI_MODEL = 'gemini-3.5-flash';
 
 /**
  * Hard ceiling on a single Gemini call, in milliseconds.

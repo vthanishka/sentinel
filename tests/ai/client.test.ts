@@ -87,7 +87,7 @@ describe('generateText', () => {
 
     expect(constructedWith).toHaveBeenCalledWith('test-key');
     const [modelParams] = getGenerativeModel.mock.calls[0] ?? [];
-    expect(modelParams.model).toBe('gemini-2.5-flash');
+    expect(modelParams.model).toBe('gemini-3.5-flash');
     expect(modelParams.generationConfig.thinkingConfig.thinkingBudget).toBe(0);
 
     const [request] = generateContent.mock.calls[0] ?? [];

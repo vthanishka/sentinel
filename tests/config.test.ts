@@ -27,9 +27,10 @@ describe('config', () => {
     resetConfigCache();
   });
 
-  it('pins the Gemini model to 2.5-flash', () => {
-    // 1.5-flash is retired and returns 404 — regression guard.
-    expect(GEMINI_MODEL).toBe('gemini-2.5-flash');
+  it('pins the Gemini model to a currently-callable flash model', () => {
+    // Older flash ids (1.5, and 2.5 for new keys) are gated and 404 — this pins
+    // the current fast model, a regression guard against silently reverting.
+    expect(GEMINI_MODEL).toBe('gemini-3.5-flash');
   });
 
   it('exposes sane AI guard rails', () => {

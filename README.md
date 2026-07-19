@@ -85,7 +85,7 @@ flowchart TD
       SVC --> REPO[(Repository interface)]
     end
 
-    AI -->|"8s timeout · Zod-validated · falls back"| GEM["Gemini 2.5-flash via the Gemini API (GEMINI_API_KEY)"]
+    AI -->|"8s timeout · Zod-validated · falls back"| GEM["Gemini 3.5-flash via the Gemini API (GEMINI_API_KEY)"]
     REPO --> STORE[("In-memory store (demo)<br/>or Firestore (optional)")]
     H -.->|verify when configured| FA[Firebase Auth]
 
@@ -207,7 +207,7 @@ Vercel builds and serves Next.js natively — there is no Docker image, no
 ## Stack
 
 Next.js 15 (App Router) · React 19 · TypeScript strict · Tailwind v4 · Radix UI · Zod ·
-Firebase Auth + Firestore (optional) · **Gemini 2.5-flash via the Gemini API
+Firebase Auth + Firestore (optional) · **Gemini 3.5-flash via the Gemini API
 (`@google/generative-ai`)** · Vitest + Testing Library + vitest-axe · Playwright +
 axe-core · deployed on Vercel.
 
