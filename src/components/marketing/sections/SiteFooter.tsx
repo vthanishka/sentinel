@@ -1,32 +1,42 @@
 import Link from 'next/link';
 
+// The sign-off, kept in the dispatch voice: a mono colophon strip with a running
+// rule, the venue coordinates, and the operations links.
 export function SiteFooter() {
   return (
-    <footer className="border-t border-[var(--color-border)] bg-[var(--color-surface)]/30">
-      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-6 py-10 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-center gap-2 text-sm font-semibold">
-          <span aria-hidden="true" className="text-[var(--color-status-normal)]">
-            ●
+    <footer className="border-t border-[#2A251D] bg-[#0A0806] text-[#8B8474]">
+      <div className="mx-auto max-w-[80rem] px-6 py-12">
+        <div className="flex flex-wrap items-center gap-4 font-[family-name:var(--font-jetbrains)] text-[0.7rem] uppercase tracking-[0.22em]">
+          <span className="text-[#ECE6D7]">
+            <span aria-hidden="true" className="text-[#FF5A2C]">
+              ▮
+            </span>{' '}
+            Sentinel
           </span>
-          SENTINEL
-          <span className="font-normal text-[var(--color-ink-dim)]">· Citadel Stadium</span>
+          <span aria-hidden="true" className="h-px flex-1 bg-[#2A251D]" />
+          <span>Citadel Stadium · 33.44°N 112.07°W</span>
         </div>
-        <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-[var(--color-ink-dim)]">
-          <Link href="/dashboard" className="transition-colors hover:text-[var(--color-ink)]">
-            Command center
-          </Link>
-          <Link href="/incidents" className="transition-colors hover:text-[var(--color-ink)]">
-            Incidents
-          </Link>
-          <Link href="/methodology" className="transition-colors hover:text-[var(--color-ink)]">
-            Methodology
-          </Link>
-        </nav>
+
+        <div className="mt-10 flex flex-wrap items-end justify-between gap-6">
+          <nav className="flex flex-wrap gap-x-8 gap-y-2 font-[family-name:var(--font-jetbrains)] text-[0.7rem] uppercase tracking-[0.2em]">
+            {(
+              [
+                ['Command center', '/dashboard'],
+                ['Incidents', '/incidents'],
+                ['Methodology', '/methodology'],
+              ] as const
+            ).map(([label, href]) => (
+              <Link key={href} href={href} className="transition-colors hover:text-[#ECE6D7]">
+                {label}
+              </Link>
+            ))}
+          </nav>
+          <p className="max-w-md text-[0.7rem] leading-relaxed">
+            FIFA World Cup 2026 operations demo · GenAI-central, safety-deterministic. Venue, feeds
+            and scenarios are simulated.
+          </p>
+        </div>
       </div>
-      <p className="mx-auto max-w-6xl px-6 pb-8 text-xs text-[var(--color-ink-dim)]">
-        FIFA World Cup 2026 operations demo · GenAI-central, safety-deterministic. Venue, feeds and
-        scenarios are simulated.
-      </p>
     </footer>
   );
 }
