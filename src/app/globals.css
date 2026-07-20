@@ -45,6 +45,7 @@
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-jetbrains), ui-monospace, 'SF Mono', 'Cascadia Code', monospace;
   --font-mono: var(--font-jetbrains), ui-monospace, 'SF Mono', 'Cascadia Code', monospace;
+  --font-serif: var(--font-fraunces), Georgia, 'Times New Roman', serif;
 
   --radius-panel: 0.5rem;
 }
@@ -435,6 +436,65 @@
   .link-underline:hover::after,
   .link-underline:focus-visible::after {
     transform: scaleX(1);
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+ * Editorial "Dispatch" primitives — the landing hero's print-broadcast system.
+ * All motion here is neutralised by the reduced-motion block below.
+ * ────────────────────────────────────────────────────────────────────────── */
+@layer utilities {
+  /* Fine paper grain over a block; sits above the fill, below the content. */
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* A hairline rule that draws itself in from the left. */
+  .rule-draw {
+    transform-origin: left;
+    animation: dispatch-rule 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  @keyframes dispatch-rule {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  /* Masked line-by-line rise for the headline; each line sets its own delay. */
+  .rise {
+    overflow: hidden;
+  }
+  .rise > span {
+    display: block;
+    transform: translateY(110%);
+    animation: dispatch-rise 0.95s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  @keyframes dispatch-rise {
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  /* Inline underline that wipes in on hover — the editorial link treatment. */
+  .ink-link {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .ink-link:hover,
+  .ink-link:focus-visible {
+    background-size: 100% 1px;
   }
 }
 
